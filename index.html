@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Academic Attendance Calculator</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f0f2f5;
+            padding: 20px;
+        }
+
+        .container {
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+
+        #settings {
+            margin-bottom: 30px;
+            padding: 15px;
+            background-color: #edf2f7;
+            border-radius: 8px;
+        }
+
+        .settings-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+
+        .subjects-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: space-between;
+        }
+
+        .subject-container {
+            flex: 1;
+            min-width: 300px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+
+        .subject-header {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #2980b9;
+            text-align: center;
+        }
+
+        .input-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .settings-inputs {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .input-field {
+            flex: 1;
+            min-width: 120px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 500;
+            color: #555;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .result-container {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 6px;
+            background-color: #e8f4fd;
+            height: 400px;
+            overflow-y: auto;
+        }
+
+        .result-item {
+            margin-bottom: 8px;
+        }
+
+        .highlight {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        #reset-btn {
+            background-color: #e74c3c;
+            color: white;
+        }
+
+        #reset-btn:hover {
+            background-color: #c0392b;
+        }
+
+        .attendance-good {
+            color: #27ae60;
+        }
+
+        .attendance-warning {
+            color: #e67e22;
+        }
+
+        .attendance-danger {
+            color: #e74c3c;
+        }
+
+        .threshold-input {
+            flex: 1;
+            min-width: 100px;
+        }
+
+        @media (max-width: 768px) {
+            .subjects-container {
+                flex-direction: column;
+            }
+
+            .subject-container {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Academic Attendance Calculator</h1>
+
+
+        <div class="subjects-container">
+            <!-- Subject containers unchanged -->
+            <!-- ADA -->
+            <div class="subject-container">
+                <div class="subject-header">ADA</div>
+                <div class="input-group">
+                    <div class="input-field">
+                        <label for="ADA-class-present">Class Attended</label>
+                        <input type="number" id="ADA-class-present" min="0" value="40" class="calc-trigger" />
+                    </div>
+                    <div class="input-field">
+                        <label for="ADA-class-total">Total Classes</label>
+                        <input type="number" id="ADA-class-total" min="1" value="50" class="calc-trigger" />
+                    </div>
+                </div>
+                <div class="input-group">
+                    <div class="input-field">
+                        <label for="ADA-lab-present">Lab Attended</label>
+                        <input type="number" id="ADA-lab-present" min="0" value="12" class="calc-trigger" />
+                    </div>
+                    <div class="input-field">
+                        <label for="ADA-lab-total">Total Labs</label>
+                        <input type="number" id="ADA-lab-total" min="1" value="15" class="calc-trigger" />
+                    </div>
+                </div>
+                <div class="result-container" id="ADA-result"></div>
+            </div>
+
+            <!-- AP -->
+            <div class="subject-container">
+                <div class="subject-header">AP</div>
+                <div class="input-group">
+                    <div class="input-field">
+                        <label for="AP-class-present">Class Attended</label>
+                        <input type="number" id="AP-class-present" min="0" value="38" class="calc-trigger" />
+                    </div>
+                    <div class="input-field">
+                        <label for="AP-class-total">Total Classes</label>
+                        <input type="number" id="AP-class-total" min="1" value="45" class="calc-trigger" />
+                    </div>
+                </div>
+                <div class="input-group">
+                    <div class="input-field">
+                        <label for="AP-lab-present">Lab Attended</label>
+                        <input type="number" id="AP-lab-present" min="0" value="14" class="calc-trigger" />
+                    </div>
+                    <div class="input-field">
+                        <label for="AP-lab-total">Total Labs</label>
+                        <input type="number" id="AP-lab-total" min="1" value="16" class="calc-trigger" />
+                    </div>
+                </div>
+                <div class="result-container" id="AP-result"></div>
+            </div>
+
+                        <!-- DBMS -->
+                        <div class="subject-container">
+                            <div class="subject-header">DBMS</div>
+                            <div class="input-group">
+                                <div class="input-field">
+                                    <label for="dbms-class-present">Class Attended</label>
+                                    <input type="number" id="dbms-class-present" min="0" value="42" class="calc-trigger" />
+                                </div>
+                                <div class="input-field">
+                                    <label for="dbms-class-total">Total Classes</label>
+                                    <input type="number" id="dbms-class-total" min="1" value="48" class="calc-trigger" />
+                                </div>
+                            </div>
+                            <div class="input-group">
+                                <div class="input-field">
+                                    <label for="dbms-lab-present">Lab Attended</label>
+                                    <input type="number" id="dbms-lab-present" min="0" value="13" class="calc-trigger" />
+                                </div>
+                                <div class="input-field">
+                                    <label for="dbms-lab-total">Total Labs</label>
+                                    <input type="number" id="dbms-lab-total" min="1" value="14" class="calc-trigger" />
+                                </div>
+                            </div>
+                            <div class="result-container" id="dbms-result"></div>
+                        </div>
+
+            <!-- Maths -->
+            <div class="subject-container">
+                <div class="subject-header">Maths</div>
+                <div class="input-group">
+                    <div class="input-field">
+                        <label for="maths-class-present">Class Attended</label>
+                        <input type="number" id="maths-class-present" min="0" value="42" class="calc-trigger" />
+                    </div>
+                    <div class="input-field">
+                        <label for="maths-class-total">Total Classes</label>
+                        <input type="number" id="maths-class-total" min="1" value="48" class="calc-trigger" />
+                    </div>
+                </div>
+                <div class="input-group">
+                    <div class="input-field">
+                        <label for="maths-lab-present">Lab Attended</label>
+                        <input type="number" id="maths-lab-present" min="0" value="13" class="calc-trigger" />
+                    </div>
+                    <div class="input-field">
+                        <label for="maths-lab-total">Total Labs</label>
+                        <input type="number" id="maths-lab-total" min="1" value="14" class="calc-trigger" />
+                    </div>
+                </div>
+                <div class="result-container" id="maths-result"></div>
+            </div>
+        </div>
+
+        <div class="buttons">
+            <button id="reset-btn">Reset All</button>
+        </div>
+        <div id="settings">
+            <div class="settings-title">Settings</div>
+            <div class="settings-inputs">
+                <div class="input-field threshold-input">
+                    <label for="threshold">Required Attendance %</label>
+                    <input type="number" id="threshold" value="75" min="0" max="100" class="calc-trigger" />
+                </div>
+                <div class="input-field threshold-input">
+                    <label for="class-weight">Class Weight %</label>
+                    <input type="number" id="class-weight" value="60" min="0" max="100" class="calc-trigger" />
+                </div>
+                <div class="input-field threshold-input">
+                    <label for="lab-weight">Lab Weight %</label>
+                    <input type="number" id="lab-weight" value="40" min="0" max="100" class="calc-trigger" />
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const resetBtn = document.getElementById('reset-btn');
+            resetBtn.addEventListener('click', resetAllFields);
+
+            const inputs = document.querySelectorAll('.calc-trigger');
+            inputs.forEach(input => {
+                // Load from localStorage
+                const savedValue = localStorage.getItem(input.id);
+                if (savedValue !== null) {
+                    input.value = savedValue;
+                }
+
+                // Save on input
+                input.addEventListener('input', () => {
+                    localStorage.setItem(input.id, input.value);
+                    calculateAllAttendance();
+                });
+            });
+
+            // Initial calculation
+            calculateAllAttendance();
+
+            function calculateAllAttendance() {
+                const threshold = parseFloat(document.getElementById('threshold').value) || 75;
+                const classWeight = parseFloat(document.getElementById('class-weight').value) || 60;
+                const labWeight = parseFloat(document.getElementById('lab-weight').value) || 40;
+
+                const totalWeight = classWeight + labWeight;
+                const normalizedClassWeight = classWeight / totalWeight;
+                const normalizedLabWeight = labWeight / totalWeight;
+
+                calculateSubjectAttendance('ADA', threshold, normalizedClassWeight, normalizedLabWeight);
+                calculateSubjectAttendance('AP', threshold, normalizedClassWeight, normalizedLabWeight);
+                calculateSubjectAttendance('maths', threshold, normalizedClassWeight, normalizedLabWeight);
+                calculateSubjectAttendance('dbms', threshold, normalizedClassWeight, normalizedLabWeight);
+            }
+
+            function calculateSubjectAttendance(subject, threshold, classWeight, labWeight) {
+                let classPresent = parseInt(document.getElementById(`${subject}-class-present`).value) || 0;
+                let classTotal = parseInt(document.getElementById(`${subject}-class-total`).value) || 1;
+                let labPresent = parseInt(document.getElementById(`${subject}-lab-present`).value) || 0;
+                let labTotal = parseInt(document.getElementById(`${subject}-lab-total`).value) || 1;
+
+                const classAttendance = (classPresent / classTotal) * 100;
+                const labAttendance = (labPresent / labTotal) * 100;
+                const weightedAttendance = (classAttendance * classWeight) + (labAttendance * labWeight);
+
+                const totalAttendedWeighted = (classPresent * classWeight) + (labPresent * labWeight);
+                const totalClassesWeighted = (classTotal * classWeight) + (labTotal * labWeight);
+
+                const t = threshold / 100;
+                const extraAttendance = totalAttendedWeighted - (t * totalClassesWeighted);
+
+                let possibleBunks = 0;
+                let classesNeeded = 0;
+                let needClassesOnly = 0;
+                let needLabsOnly = 0;
+                let needBothEqual = 0;
+
+                if (t <= 0) {
+                    // No minimum requirement; can bunk arbitrarily many classes
+                    possibleBunks = Number.POSITIVE_INFINITY;
+                    classesNeeded = 0;
+                } else if (t >= 1) {
+                    // 100% required: only possible if already perfect; otherwise impossible in finite classes
+                    const alreadyPerfect = Math.abs(totalAttendedWeighted - totalClassesWeighted) < 1e-9;
+                    possibleBunks = 0;
+                    classesNeeded = alreadyPerfect ? 0 : Number.POSITIVE_INFINITY;
+                } else {
+                    // t in (0,1)
+                    const bunkMaxRHS = (totalAttendedWeighted - t * totalClassesWeighted) / (t * classWeight);
+                    possibleBunks = Math.max(0, Math.floor(bunkMaxRHS));
+
+                    const deficit = (t * totalClassesWeighted) - totalAttendedWeighted;
+                    const denomClass = (1 - t) * classWeight;
+                    const denomLab = (1 - t) * labWeight;
+                    const denomBoth = (1 - t) * (classWeight + labWeight);
+
+                    needClassesOnly = denomClass > 0 ? Math.max(0, Math.ceil(deficit / denomClass)) : Number.POSITIVE_INFINITY;
+                    needLabsOnly = denomLab > 0 ? Math.max(0, Math.ceil(deficit / denomLab)) : Number.POSITIVE_INFINITY;
+                    needBothEqual = denomBoth > 0 ? Math.max(0, Math.ceil(deficit / denomBoth)) : Number.POSITIVE_INFINITY;
+
+                    classesNeeded = Math.min(needClassesOnly, needLabsOnly, needBothEqual);
+                }
+
+                // Compute future attendance preview for the more relevant scenario
+                let futureAttended = totalAttendedWeighted;
+                let futureTotalClasses = totalClassesWeighted;
+                if (possibleBunks === Number.POSITIVE_INFINITY) {
+                    // Arbitrary; preview after 0 additional classes
+                } else if (possibleBunks > 0) {
+                    futureTotalClasses += possibleBunks * classWeight;
+                } else if (classesNeeded === Number.POSITIVE_INFINITY) {
+                    // Preview after a large number of attended classes to show approaching t
+                    const previewAttend = 10; // minimal preview
+                    futureAttended += previewAttend * classWeight;
+                    futureTotalClasses += previewAttend * classWeight;
+                } else if (classesNeeded > 0) {
+                    // Add based on the minimal scenario
+                    if (classesNeeded === needClassesOnly) {
+                        futureAttended += classesNeeded * classWeight;
+                        futureTotalClasses += classesNeeded * classWeight;
+                    } else if (classesNeeded === needLabsOnly) {
+                        futureAttended += classesNeeded * labWeight;
+                        futureTotalClasses += classesNeeded * labWeight;
+                    } else {
+                        // both equally
+                        futureAttended += classesNeeded * (classWeight + labWeight);
+                        futureTotalClasses += classesNeeded * (classWeight + labWeight);
+                    }
+                }
+
+                const futureAttendancePercentage = (futureAttended / futureTotalClasses) * 100;
+
+                const resultContainer = document.getElementById(`${subject}-result`);
+                const formattedClassAttendance = classAttendance.toFixed(2);
+                const formattedLabAttendance = labAttendance.toFixed(2);
+                const formattedWeightedAttendance = weightedAttendance.toFixed(2);
+                const formattedFutureAttendance = futureAttendancePercentage.toFixed(2);
+
+                let statusClass = 'attendance-danger';
+                if (weightedAttendance >= threshold + 5) {
+                    statusClass = 'attendance-good';
+                } else if (weightedAttendance >= threshold) {
+                    statusClass = 'attendance-warning';
+                }
+
+                let resultHTML = `
+          <div class="result-item">Percentage Required: <span class="highlight">${threshold}%</span></div>
+          <div class="result-item">Class Attendance: <span class="highlight">${classPresent}/${classTotal} → ${formattedClassAttendance}%</span> (Weight: ${(classWeight * 100).toFixed(0)}%)</div>
+          <div class="result-item">Lab Attendance: <span class="highlight">${labPresent}/${labTotal} → ${formattedLabAttendance}%</span> (Weight: ${(labWeight * 100).toFixed(0)}%)</div>
+          <div class="result-item">Current Weighted Attendance: <span class="highlight ${statusClass}">${formattedWeightedAttendance}%</span></div>
+        `;
+
+                if (t <= 0) {
+                    resultHTML += `<div class="result-item">No minimum attendance set. You can bunk <span class="highlight attendance-good">any number</span> of classes.</div>`;
+                } else if (t >= 1) {
+                    const perfectNow = Math.abs(totalAttendedWeighted - totalClassesWeighted) < 1e-9;
+                    if (perfectNow) {
+                        resultHTML += `<div class="result-item">Requirement is 100%. You are perfect now; you can bunk <span class="highlight">0</span> classes.</div>`;
+                    } else {
+                        resultHTML += `<div class="result-item">Requirement is 100%. It's not possible to reach 100% in finite future classes after any absence.</div>`;
+                    }
+                } else if (possibleBunks > 0) {
+                    // Scenario-specific bunk allowances
+                    const allowanceNumerator = totalAttendedWeighted - (t * totalClassesWeighted);
+                    const bunkClassesOnly = Math.max(0, Math.floor(allowanceNumerator / (t * classWeight)));
+                    const bunkLabsOnly = Math.max(0, Math.floor(allowanceNumerator / (t * labWeight)));
+                    const bunkBothEqual = Math.max(0, Math.floor(allowanceNumerator / (t * (classWeight + labWeight))));
+
+                    resultHTML += `<div class="result-item">You are above the required attendance. Here are safe bunk options:</div>`;
+                    resultHTML += `<div class="result-item">- If you skip only <span class=\"highlight\">classes</span>: <span class=\"highlight attendance-good\">${bunkClassesOnly}</span></div>`;
+                    resultHTML += `<div class="result-item">- If you skip only <span class=\"highlight\">labs</span>: <span class=\"highlight attendance-good\">${bunkLabsOnly}</span></div>`;
+                    resultHTML += `<div class="result-item">- If you skip <span class=\"highlight\">both equally</span>: <span class=\"highlight attendance-good\">${bunkBothEqual}</span> classes and <span class=\"highlight attendance-good\">${bunkBothEqual}</span> labs</div>`;
+                } else if (classesNeeded > 0) {
+                    const needClassesText = needClassesOnly === Number.POSITIVE_INFINITY ? '∞' : needClassesOnly;
+                    const needLabsText = needLabsOnly === Number.POSITIVE_INFINITY ? '∞' : needLabsOnly;
+                    const needBothText = needBothEqual === Number.POSITIVE_INFINITY ? '∞' : needBothEqual;
+
+                    resultHTML += `<div class="result-item">You are below the required attendance. Attend at least:</div>`;
+                    resultHTML += `<div class="result-item">- Only <span class=\"highlight\">classes</span>: <span class=\"highlight attendance-danger\">${needClassesText}</span></div>`;
+                    resultHTML += `<div class="result-item">- Only <span class=\"highlight\">labs</span>: <span class=\"highlight attendance-danger\">${needLabsText}</span></div>`;
+                    resultHTML += `<div class="result-item">- <span class=\"highlight\">Both equally</span>: <span class=\"highlight attendance-danger\">${needBothText}</span> classes and <span class=\"highlight attendance-danger\">${needBothText}</span> labs</div>`;
+                } else {
+                    resultHTML += `<div class="result-item">You are exactly at the required attendance. Any bunk will drop you below.</div>`;
+                }
+
+                resultContainer.innerHTML = resultHTML;
+            }
+
+            function resetAllFields() {
+                localStorage.clear();
+
+                document.getElementById('threshold').value = 75;
+                document.getElementById('class-weight').value = 60;
+                document.getElementById('lab-weight').value = 40;
+
+                const inputs = document.querySelectorAll('.subject-container input[type="number"]');
+                inputs.forEach(input => {
+                    if (input.id.includes('total')) {
+                        input.value = 1;
+                    } else {
+                        input.value = 0;
+                    }
+                    localStorage.setItem(input.id, input.value);
+                });
+
+                calculateAllAttendance();
+            }
+        });
+    </script>
+</body>
+
+</html>
