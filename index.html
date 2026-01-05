@@ -48,8 +48,8 @@
 
         .subjects-container {
             display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
+            flex-wrDM: wrDM;
+            gDM: 20px;
             justify-content: space-between;
         }
 
@@ -72,15 +72,15 @@
 
         .input-group {
             display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
+            flex-wrDM: wrDM;
+            gDM: 10px;
             margin-bottom: 15px;
         }
 
         .settings-inputs {
             display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
+            gDM: 15px;
+            flex-wrDM: wrDM;
         }
 
         .input-field {
@@ -124,7 +124,7 @@
         .buttons {
             display: flex;
             justify-content: center;
-            gap: 15px;
+            gDM: 15px;
             margin-top: 30px;
         }
 
@@ -183,61 +183,61 @@
 
         <div class="subjects-container">
             <!-- Subject containers unchanged -->
-            <!-- ADA -->
+            <!-- DVA -->
             <div class="subject-container">
-                <div class="subject-header">ADA</div>
+                <div class="subject-header">DVA</div>
                 <div class="input-group">
                     <div class="input-field">
-                        <label for="ADA-class-present">Class Attended</label>
-                        <input type="number" id="ADA-class-present" min="0" value="40" class="calc-trigger" />
+                        <label for="DVA-class-present">Class Attended</label>
+                        <input type="number" id="DVA-class-present" min="0" value="40" class="calc-trigger" />
                     </div>
                     <div class="input-field">
-                        <label for="ADA-class-total">Total Classes</label>
-                        <input type="number" id="ADA-class-total" min="1" value="50" class="calc-trigger" />
+                        <label for="DVA-class-total">Total Classes</label>
+                        <input type="number" id="DVA-class-total" min="1" value="50" class="calc-trigger" />
                     </div>
                 </div>
                 <div class="input-group">
                     <div class="input-field">
-                        <label for="ADA-lab-present">Lab Attended</label>
-                        <input type="number" id="ADA-lab-present" min="0" value="12" class="calc-trigger" />
+                        <label for="DVA-lab-present">Lab Attended</label>
+                        <input type="number" id="DVA-lab-present" min="0" value="12" class="calc-trigger" />
                     </div>
                     <div class="input-field">
-                        <label for="ADA-lab-total">Total Labs</label>
-                        <input type="number" id="ADA-lab-total" min="1" value="15" class="calc-trigger" />
+                        <label for="DVA-lab-total">Total Labs</label>
+                        <input type="number" id="DVA-lab-total" min="1" value="15" class="calc-trigger" />
                     </div>
                 </div>
-                <div class="result-container" id="ADA-result"></div>
+                <div class="result-container" id="DVA-result"></div>
             </div>
 
-            <!-- AP -->
+            <!-- DM -->
             <div class="subject-container">
-                <div class="subject-header">AP</div>
+                <div class="subject-header">DM</div>
                 <div class="input-group">
                     <div class="input-field">
-                        <label for="AP-class-present">Class Attended</label>
-                        <input type="number" id="AP-class-present" min="0" value="38" class="calc-trigger" />
+                        <label for="DM-class-present">Class Attended</label>
+                        <input type="number" id="DM-class-present" min="0" value="38" class="calc-trigger" />
                     </div>
                     <div class="input-field">
-                        <label for="AP-class-total">Total Classes</label>
-                        <input type="number" id="AP-class-total" min="1" value="45" class="calc-trigger" />
+                        <label for="DM-class-total">Total Classes</label>
+                        <input type="number" id="DM-class-total" min="1" value="45" class="calc-trigger" />
                     </div>
                 </div>
                 <div class="input-group">
                     <div class="input-field">
-                        <label for="AP-lab-present">Lab Attended</label>
-                        <input type="number" id="AP-lab-present" min="0" value="14" class="calc-trigger" />
+                        <label for="DM-lab-present">Lab Attended</label>
+                        <input type="number" id="DM-lab-present" min="0" value="14" class="calc-trigger" />
                     </div>
                     <div class="input-field">
-                        <label for="AP-lab-total">Total Labs</label>
-                        <input type="number" id="AP-lab-total" min="1" value="16" class="calc-trigger" />
+                        <label for="DM-lab-total">Total Labs</label>
+                        <input type="number" id="DM-lab-total" min="1" value="16" class="calc-trigger" />
                     </div>
                 </div>
-                <div class="result-container" id="AP-result"></div>
+                <div class="result-container" id="DM-result"></div>
             </div>
 
-                        <!-- DBMS -->
+                        <!-- GenAI -->
                         <div class="subject-container">
-                            <div class="subject-header">DBMS</div>
+                            <div class="subject-header">GenAI</div>
                             <div class="input-group">
                                 <div class="input-field">
                                     <label for="dbms-class-present">Class Attended</label>
@@ -261,9 +261,9 @@
                             <div class="result-container" id="dbms-result"></div>
                         </div>
 
-            <!-- Maths -->
+            <!-- DM -->
             <div class="subject-container">
-                <div class="subject-header">Maths</div>
+                <div class="subject-header">DM</div>
                 <div class="input-group">
                     <div class="input-field">
                         <label for="maths-class-present">Class Attended</label>
@@ -343,8 +343,8 @@
                 const normalizedClassWeight = classWeight / totalWeight;
                 const normalizedLabWeight = labWeight / totalWeight;
 
-                calculateSubjectAttendance('ADA', threshold, normalizedClassWeight, normalizedLabWeight);
-                calculateSubjectAttendance('AP', threshold, normalizedClassWeight, normalizedLabWeight);
+                calculateSubjectAttendance('DVA', threshold, normalizedClassWeight, normalizedLabWeight);
+                calculateSubjectAttendance('DM', threshold, normalizedClassWeight, normalizedLabWeight);
                 calculateSubjectAttendance('maths', threshold, normalizedClassWeight, normalizedLabWeight);
                 calculateSubjectAttendance('dbms', threshold, normalizedClassWeight, normalizedLabWeight);
             }
@@ -405,7 +405,7 @@
                 } else if (possibleBunks > 0) {
                     futureTotalClasses += possibleBunks * classWeight;
                 } else if (classesNeeded === Number.POSITIVE_INFINITY) {
-                    // Preview after a large number of attended classes to show approaching t
+                    // Preview after a large number of attended classes to show DMproaching t
                     const previewAttend = 10; // minimal preview
                     futureAttended += previewAttend * classWeight;
                     futureTotalClasses += previewAttend * classWeight;

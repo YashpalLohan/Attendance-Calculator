@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Marks & CGPA Calculator</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f0f2f5;
+            padding: 20px;
+        }
+
+        .container {
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .nav a {
+            color: #2980b9;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            padding: 16px;
+        }
+
+        .card h2 {
+            color: #2980b9;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .row {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 8px;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        label {
+            font-size: 14px;
+            color: #555;
+        }
+
+        input[type="number"], input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .muted {
+            color: #666;
+            font-size: 13px;
+        }
+
+        .section-title {
+            font-weight: bold;
+            color: #2c3e50;
+            margin: 16px 0 8px 0;
+        }
+
+        .summary {
+            background: #e8f4fd;
+            border-radius: 6px;
+            padding: 10px;
+            margin-top: 8px;
+        }
+
+        .compare {
+            background: #edf2f7;
+            border-radius: 6px;
+            padding: 10px;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        button {
+            padding: 10px 18px;
+            font-size: 14px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .primary {
+            background-color: #2980b9;
+            color: white;
+        }
+
+        .danger {
+            background-color: #e74c3c;
+            color: white;
+        }
+
+        @media (max-width: 900px) {
+            .grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Marks & CGPA Calculator</h1>
+        <div class="nav"><a href="index.html">← Back to Attendance</a></div>
+
+        <div class="grid">
+            <div class="card">
+                <h2>Yashpal</h2>
+                <div class="row">
+                    <div class="section-title">ADA</div>
+                </div>
+                <div class="row muted">
+                    <div style="grid-column: span 1;">#</div>
+                    <div style="grid-column: span 2;">MCQ Done</div>
+                    <div style="grid-column: span 2;">MCQ Out Of</div>
+                    <div style="grid-column: span 2;">MCQ Wt</div>
+                    <div style="grid-column: span 2;">Code Done</div>
+                    <div style="grid-column: span 2;">Code Out Of</div>
+                    <div style="grid-column: span 1;">Code Wt</div>
+                </div>
+                <div id="y-ada-rows"></div>
+                <div class="row">
+                    <div style="grid-column: span 4;"><label>Marks divisor</label><input type="number" id="y-ada-div" value="20" class="calc"></div>
+                    <div style="grid-column: span 8;" class="summary" id="y-ada-summary"></div>
+                </div>
+
+                <div class="section-title">DBMS</div>
+                <div class="row muted">
+                    <div style="grid-column: span 1;">#</div>
+                    <div style="grid-column: span 2;">MCQ Done</div>
+                    <div style="grid-column: span 2;">MCQ Out Of</div>
+                    <div style="grid-column: span 2;">MCQ Wt</div>
+                    <div style="grid-column: span 2;">Code Done</div>
+                    <div style="grid-column: span 2;">Code Out Of</div>
+                    <div style="grid-column: span 1;">Code Wt</div>
+                </div>
+                <div id="y-dbms-rows"></div>
+                <div class="row">
+                    <div style="grid-column: span 4;"><label>Marks divisor</label><input type="number" id="y-dbms-div" value="20" class="calc"></div>
+                    <div style="grid-column: span 8;" class="summary" id="y-dbms-summary"></div>
+                </div>
+
+                <div class="section-title">AP</div>
+                <div class="row muted">
+                    <div style="grid-column: span 1;">#</div>
+                    <div style="grid-column: span 2;">MCQ Done</div>
+                    <div style="grid-column: span 2;">MCQ Out Of</div>
+                    <div style="grid-column: span 2;">MCQ Wt</div>
+                    <div style="grid-column: span 2;">Code Done</div>
+                    <div style="grid-column: span 2;">Code Out Of</div>
+                    <div style="grid-column: span 1;">Code Wt</div>
+                </div>
+                <div id="y-ap-rows"></div>
+                <div class="row">
+                    <div style="grid-column: span 4;"><label>Marks divisor</label><input type="number" id="y-ap-div" value="20" class="calc"></div>
+                    <div style="grid-column: span 8;" class="summary" id="y-ap-summary"></div>
+                </div>
+
+                <div class="section-title">Maths</div>
+                <div class="row muted">
+                    <div style="grid-column: span 1;">#</div>
+                    <div style="grid-column: span 2;">MCQ Done</div>
+                    <div style="grid-column: span 2;">MCQ Out Of</div>
+                    <div style="grid-column: span 2;">MCQ Wt</div>
+                    <div style="grid-column: span 2;">Code Done</div>
+                    <div style="grid-column: span 2;">Code Out Of</div>
+                    <div style="grid-column: span 1;">Code Wt</div>
+                </div>
+                <div id="y-maths-rows"></div>
+                <div class="row">
+                    <div style="grid-column: span 4;"><label>Marks divisor</label><input type="number" id="y-maths-div" value="20" class="calc"></div>
+                    <div style="grid-column: span 8;" class="summary" id="y-maths-summary"></div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Dhruv</h2>
+                <div class="row">
+                    <div class="section-title">ADA</div>
+                </div>
+                <div class="row muted">
+                    <div style="grid-column: span 1;">#</div>
+                    <div style="grid-column: span 2;">MCQ Done</div>
+                    <div style="grid-column: span 2;">MCQ Out Of</div>
+                    <div style="grid-column: span 2;">MCQ Wt</div>
+                    <div style="grid-column: span 2;">Code Done</div>
+                    <div style="grid-column: span 2;">Code Out Of</div>
+                    <div style="grid-column: span 1;">Code Wt</div>
+                </div>
+                <div id="d-ada-rows"></div>
+                <div class="row">
+                    <div style="grid-column: span 4;"><label>Marks divisor</label><input type="number" id="d-ada-div" value="20" class="calc"></div>
+                    <div style="grid-column: span 8;" class="summary" id="d-ada-summary"></div>
+                </div>
+
+                <div class="section-title">DBMS</div>
+                <div class="row muted">
+                    <div style="grid-column: span 1;">#</div>
+                    <div style="grid-column: span 2;">MCQ Done</div>
+                    <div style="grid-column: span 2;">MCQ Out Of</div>
+                    <div style="grid-column: span 2;">MCQ Wt</div>
+                    <div style="grid-column: span 2;">Code Done</div>
+                    <div style="grid-column: span 2;">Code Out Of</div>
+                    <div style="grid-column: span 1;">Code Wt</div>
+                </div>
+                <div id="d-dbms-rows"></div>
+                <div class="row">
+                    <div style="grid-column: span 4;"><label>Marks divisor</label><input type="number" id="d-dbms-div" value="20" class="calc"></div>
+                    <div style="grid-column: span 8;" class="summary" id="d-dbms-summary"></div>
+                </div>
+
+                <div class="section-title">AP</div>
+                <div class="row muted">
+                    <div style="grid-column: span 1;">#</div>
+                    <div style="grid-column: span 2;">MCQ Done</div>
+                    <div style="grid-column: span 2;">MCQ Out Of</div>
+                    <div style="grid-column: span 2;">MCQ Wt</div>
+                    <div style="grid-column: span 2;">Code Done</div>
+                    <div style="grid-column: span 2;">Code Out Of</div>
+                    <div style="grid-column: span 1;">Code Wt</div>
+                </div>
+                <div id="d-ap-rows"></div>
+                <div class="row">
+                    <div style="grid-column: span 4;"><label>Marks divisor</label><input type="number" id="d-ap-div" value="20" class="calc"></div>
+                    <div style="grid-column: span 8;" class="summary" id="d-ap-summary"></div>
+                </div>
+
+                <div class="section-title">Maths</div>
+                <div class="row muted">
+                    <div style="grid-column: span 1;">#</div>
+                    <div style="grid-column: span 2;">MCQ Done</div>
+                    <div style="grid-column: span 2;">MCQ Out Of</div>
+                    <div style="grid-column: span 2;">MCQ Wt</div>
+                    <div style="grid-column: span 2;">Code Done</div>
+                    <div style="grid-column: span 2;">Code Out Of</div>
+                    <div style="grid-column: span 1;">Code Wt</div>
+                </div>
+                <div id="d-maths-rows"></div>
+                <div class="row">
+                    <div style="grid-column: span 4;"><label>Marks divisor</label><input type="number" id="d-maths-div" value="20" class="calc"></div>
+                    <div style="grid-column: span 8;" class="summary" id="d-maths-summary"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" style="margin-top: 20px;">
+            <h2>Comparison</h2>
+            <div class="compare" id="comparison"></div>
+        </div>
+
+        <div class="card" style="margin-top: 20px;">
+            <h2>CGPA Calculator</h2>
+            <div class="row muted">
+                <div style="grid-column: span 3;">Subject</div>
+                <div style="grid-column: span 3;">Credits</div>
+                <div style="grid-column: span 3;">Yashpal %</div>
+                <div style="grid-column: span 3;">Dhruv %</div>
+            </div>
+            <div class="row">
+                <div style="grid-column: span 3;">ADA</div>
+                <div style="grid-column: span 3;"><input type="number" id="c-ada-cr" value="4" class="calc"></div>
+                <div style="grid-column: span 3;"><input type="number" id="c-ada-y" value="0" class="calc" readonly></div>
+                <div style="grid-column: span 3;"><input type="number" id="c-ada-d" value="0" class="calc" readonly></div>
+            </div>
+            <div class="row">
+                <div style="grid-column: span 3;">DBMS</div>
+                <div style="grid-column: span 3;"><input type="number" id="c-dbms-cr" value="4" class="calc"></div>
+                <div style="grid-column: span 3;"><input type="number" id="c-dbms-y" value="0" class="calc" readonly></div>
+                <div style="grid-column: span 3;"><input type="number" id="c-dbms-d" value="0" class="calc" readonly></div>
+            </div>
+            <div class="row">
+                <div style="grid-column: span 3;">AP</div>
+                <div style="grid-column: span 3;"><input type="number" id="c-ap-cr" value="3" class="calc"></div>
+                <div style="grid-column: span 3;"><input type="number" id="c-ap-y" value="0" class="calc" readonly></div>
+                <div style="grid-column: span 3;"><input type="number" id="c-ap-d" value="0" class="calc" readonly></div>
+            </div>
+            <div class="row">
+                <div style="grid-column: span 3;">Maths</div>
+                <div style="grid-column: span 3;"><input type="number" id="c-maths-cr" value="3" class="calc"></div>
+                <div style="grid-column: span 3;"><input type="number" id="c-maths-y" value="0" class="calc" readonly></div>
+                <div style="grid-column: span 3;"><input type="number" id="c-maths-d" value="0" class="calc" readonly></div>
+            </div>
+            <div class="summary" id="cgpa-summary" style="margin-top: 10px;"></div>
+        </div>
+
+        <div class="actions">
+            <button class="danger" id="clear">Clear</button>
+        </div>
+    </div>
+
+    <script>
+        const SUBJECTS = ["ada", "dbms", "ap", "maths"];
+        const ROWS_PER_SUBJECT = 4;
+
+        function createContestRows(prefix, subjectKey) {
+            const container = document.getElementById(`${prefix}-${subjectKey}-rows`);
+            for (let i = 1; i <= ROWS_PER_SUBJECT; i++) {
+                const row = document.createElement('div');
+                row.className = 'row';
+                row.innerHTML = `
+                    <div style="grid-column: span 1;">${i}</div>
+                    <div style="grid-column: span 2;"><input type="number" id="${prefix}-${subjectKey}-mcq-done-${i}" value="0" class="calc"></div>
+                    <div style="grid-column: span 2;"><input type="number" id="${prefix}-${subjectKey}-mcq-out-${i}" value="15" class="calc"></div>
+                    <div style="grid-column: span 2;"><input type="number" id="${prefix}-${subjectKey}-mcq-w-${i}" value="40" class="calc"></div>
+                    <div style="grid-column: span 2;"><input type="number" id="${prefix}-${subjectKey}-code-done-${i}" value="0" class="calc"></div>
+                    <div style="grid-column: span 2;"><input type="number" id="${prefix}-${subjectKey}-code-out-${i}" value="1" class="calc"></div>
+                    <div style="grid-column: span 1;"><input type="number" id="${prefix}-${subjectKey}-code-w-${i}" value="60" class="calc"></div>
+                `;
+                container.appendChild(row);
+            }
+        }
+
+        function loadFromStorage() {
+            document.querySelectorAll('.calc').forEach(inp => {
+                const saved = localStorage.getItem(inp.id);
+                if (saved !== null) inp.value = saved;
+            });
+        }
+
+        function saveToStorage() {
+            document.querySelectorAll('.calc').forEach(inp => {
+                localStorage.setItem(inp.id, inp.value);
+            });
+        }
+
+        function calcSubject(prefix, subjectKey) {
+            const divInput = document.getElementById(`${prefix}-${subjectKey}-div`);
+            const divisor = parseFloat(divInput?.value || '20') || 20;
+            let totalMarks = 0;
+            const contestPercents = [];
+
+            for (let i = 1; i <= ROWS_PER_SUBJECT; i++) {
+                const mcqDone = parseFloat(document.getElementById(`${prefix}-${subjectKey}-mcq-done-${i}`).value) || 0;
+                const mcqOut = parseFloat(document.getElementById(`${prefix}-${subjectKey}-mcq-out-${i}`).value) || 1;
+                const mcqW = parseFloat(document.getElementById(`${prefix}-${subjectKey}-mcq-w-${i}`).value) || 0;
+                const codeDone = parseFloat(document.getElementById(`${prefix}-${subjectKey}-code-done-${i}`).value) || 0;
+                const codeOut = parseFloat(document.getElementById(`${prefix}-${subjectKey}-code-out-${i}`).value) || 1;
+                const codeW = parseFloat(document.getElementById(`${prefix}-${subjectKey}-code-w-${i}`).value) || 0;
+
+                const mcqScore = (mcqDone / mcqOut) * mcqW;
+                const codeScore = (codeDone / codeOut) * codeW;
+                const totalScore = mcqScore + codeScore; // per-contest out of 100
+                const marks = totalScore / divisor; // typically out of 5 if divisor=20
+                totalMarks += marks;
+                contestPercents.push(isFinite(totalScore) ? totalScore : 0);
+            }
+
+            const summaryEl = document.getElementById(`${prefix}-${subjectKey}-summary`);
+            const valid = contestPercents.filter(v => !isNaN(v));
+            const contestAvg = valid.length ? (valid.reduce((a,b)=>a+b,0)/valid.length) : 0;
+            summaryEl.textContent = `Contest Avg: ${contestAvg.toFixed(2)}% | Total Marks: ${totalMarks.toFixed(2)}`;
+            return { totalMarks, contestAvg };
+        }
+
+        function calcAll() {
+            const yTotals = {};
+            const dTotals = {};
+            const yContest = {};
+            const dContest = {};
+            SUBJECTS.forEach(s => {
+                const yRes = calcSubject('y', s);
+                const dRes = calcSubject('d', s);
+                yTotals[s] = yRes.totalMarks;
+                dTotals[s] = dRes.totalMarks;
+                yContest[s] = yRes.contestAvg;
+                dContest[s] = dRes.contestAvg;
+            });
+
+            // Comparison
+            const comp = document.getElementById('comparison');
+            const lines = [];
+            let ySum = 0, dSum = 0;
+            SUBJECTS.forEach(s => {
+                const gap = (yTotals[s] - dTotals[s]).toFixed(2);
+                ySum += yTotals[s];
+                dSum += dTotals[s];
+                lines.push(`${s.toUpperCase()}: Y − D = ${gap}`);
+            });
+            lines.push(`Overall: Y=${ySum.toFixed(2)} vs D=${dSum.toFixed(2)} | Gap=${(ySum - dSum).toFixed(2)}`);
+            comp.innerHTML = lines.map(l => `<div>${l}</div>`).join('');
+
+            // Finals and CGPA
+            const finalsY = {};
+            const finalsD = {};
+            SUBJECTS.forEach(s => {
+                const midY = parseFloat(document.getElementById(`y-${s}-mid`)?.value)||0;
+                const endY = parseFloat(document.getElementById(`y-${s}-end`)?.value)||0;
+                const partY = parseFloat(document.getElementById(`y-${s}-part`)?.value)||0;
+                const midD = parseFloat(document.getElementById(`d-${s}-mid`)?.value)||0;
+                const endD = parseFloat(document.getElementById(`d-${s}-end`)?.value)||0;
+                const partD = parseFloat(document.getElementById(`d-${s}-part`)?.value)||0;
+                finalsY[s] = 0.2*midY + 0.4*endY + 0.2*(yContest[s]||0) + 0.2*partY;
+                finalsD[s] = 0.2*midD + 0.4*endD + 0.2*(dContest[s]||0) + 0.2*partD;
+                const yFinalEl = document.getElementById(`y-${s}-final`);
+                const dFinalEl = document.getElementById(`d-${s}-final`);
+                if (yFinalEl) yFinalEl.textContent = `Final %: ${finalsY[s].toFixed(2)}`;
+                if (dFinalEl) dFinalEl.textContent = `Final %: ${finalsD[s].toFixed(2)}`;
+                const yCg = document.getElementById(`c-${s}-y`);
+                const dCg = document.getElementById(`c-${s}-d`);
+                if (yCg) yCg.value = finalsY[s].toFixed(2);
+                if (dCg) dCg.value = finalsD[s].toFixed(2);
+            });
+
+            // CGPA (simple % -> GP by /10, weighted by credits)
+            const adaCr = parseFloat(document.getElementById('c-ada-cr').value)||0;
+            const dbmsCr = parseFloat(document.getElementById('c-dbms-cr').value)||0;
+            const apCr = parseFloat(document.getElementById('c-ap-cr').value)||0;
+            const mathsCr = parseFloat(document.getElementById('c-maths-cr').value)||0;
+            const yAda = finalsY['ada']||0;
+            const yDbms = finalsY['dbms']||0;
+            const yAp = finalsY['ap']||0;
+            const yMaths = finalsY['maths']||0;
+            const dAda = finalsD['ada']||0;
+            const dDbms = finalsD['dbms']||0;
+            const dAp = finalsD['ap']||0;
+            const dMaths = finalsD['maths']||0;
+
+            const yWeighted = (yAda/10)*adaCr + (yDbms/10)*dbmsCr + (yAp/10)*apCr + (yMaths/10)*mathsCr;
+            const dWeighted = (dAda/10)*adaCr + (dDbms/10)*dbmsCr + (dAp/10)*apCr + (dMaths/10)*mathsCr;
+            const totalCr = adaCr + dbmsCr + apCr + mathsCr;
+            const yCgpa = totalCr>0 ? (yWeighted/totalCr) : 0;
+            const dCgpa = totalCr>0 ? (dWeighted/totalCr) : 0;
+            document.getElementById('cgpa-summary').textContent = `CGPA → Yashpal: ${yCgpa.toFixed(2)} | Dhruv: ${dCgpa.toFixed(2)}`;
+        }
+
+        function attachHandlers() {
+            document.querySelectorAll('.calc').forEach(inp => {
+                inp.addEventListener('input', () => {
+                    localStorage.setItem(inp.id, inp.value);
+                    calcAll();
+                });
+            });
+            document.getElementById('clear').addEventListener('click', () => {
+                localStorage.clear();
+                location.reload();
+            });
+        }
+
+        // Initialize UI
+        function createAssessRows(prefix, subjectKey) {
+            const summaryRow = document.getElementById(`${prefix}-${subjectKey}-summary`).parentElement;
+            const assess = document.createElement('div');
+            assess.className = 'row';
+            assess.innerHTML = `
+                <div style="grid-column: span 3;"><label>Mid Sem %</label><input type="number" id="${prefix}-${subjectKey}-mid" value="0" class="calc"></div>
+                <div style="grid-column: span 3;"><label>End Sem %</label><input type="number" id="${prefix}-${subjectKey}-end" value="0" class="calc"></div>
+                <div style="grid-column: span 3;"><label>Participation %</label><input type="number" id="${prefix}-${subjectKey}-part" value="0" class="calc"></div>
+                <div style="grid-column: span 3;" class="summary" id="${prefix}-${subjectKey}-final">Final %: 0.00</div>
+            `;
+            summaryRow.insertAdjacentElement('afterend', assess);
+        }
+
+        SUBJECTS.forEach(s => {
+            createContestRows('y', s);
+            createContestRows('d', s);
+        });
+        SUBJECTS.forEach(s => { createAssessRows('y', s); createAssessRows('d', s); });
+        loadFromStorage();
+        attachHandlers();
+        calcAll();
+    </script>
+</body>
+
+</html>
+
